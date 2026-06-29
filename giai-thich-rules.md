@@ -24,6 +24,7 @@ Thống nhất một công cụ duy nhất cho thao tác trình duyệt, tránh 
 
 ### 7. E2E / Playwright nhiều bước: đẩy sang sub-agent
 Output của Playwright rất nặng (snapshot DOM, console log, network, screenshot) — mỗi bước hàng nghìn token. Chạy ở luồng chính sẽ ngốn context window, đẩy thứ quan trọng ra ngoài. Sub-agent gánh phần nặng và chỉ trả về **kết luận** (pass/fail, lỗi ở đâu), giữ luồng chính sạch và ổn định.
+Sub-agent này **mặc định dùng model Sonnet** — E2E chủ yếu là thao tác máy móc (navigate, click, assert), không cần model mạnh nhất, dùng Sonnet vừa đủ lại tiết kiệm.
 **Ngoại lệ:** check nhanh trực tiếp mà mình đang xem live thì chạy luôn ở luồng chính cho thấy ngay.
 
 ### 8. Tra cứu code: dùng codegraph trước grep/Read
