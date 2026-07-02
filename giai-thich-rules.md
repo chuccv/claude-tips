@@ -30,6 +30,7 @@ Sub-agent này **mặc định dùng model Sonnet** — E2E chủ yếu là thao
 ### 8. Tra cứu code: dùng codegraph trước grep/Read
 Codegraph là index dựng sẵn (symbol, call chain, file) — một lệnh trả về source + ai gọi + ảnh hưởng đâu, nhanh và ít token hơn nhiều so với vòng lặp grep + read.
 **Ngoại lệ:** Codegraph chỉ index code (PHP/JS/TS/XML/YAML/liquid), **không index CSS/LESS/SCSS** → với các file style này vẫn phải dùng `grep`.
+**Không đẩy codegraph sang sub-agent** (khác với Playwright ở rule 7): output codegraph vốn nhẹ và gọn, delegate chỉ tốn thêm round-trip và mất lợi thế thấy blast radius (ai gọi, ảnh hưởng đâu) ngay tại luồng chính. Sub-agent chỉ hợp với tool output nặng như Playwright.
 
 ## Behavioral Guidelines (Karpathy)
 
