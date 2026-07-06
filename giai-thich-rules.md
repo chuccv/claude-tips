@@ -41,3 +41,14 @@ Nguyên tắc giảm lỗi thường gặp khi LLM viết code, thiên về cẩ
 3. **Surgical Changes** — chỉ đụng đúng phần cần thiết, không refactor thứ không hỏng.
 4. **Goal-Driven Execution** — định nghĩa tiêu chí thành công, loop tới khi verify được.
    **Chỉ viết test cho task rủi ro cao** (bug logic, validation, refactor có nguy cơ hồi quy). Task nhỏ/một lần thì bỏ qua test, verify trực tiếp — tránh làm chậm không cần thiết.
+
+## Mẹo: hạ model của subagent `general-purpose` xuống Sonnet
+
+Tạo file `~/.claude/agents/general-purpose.md` với frontmatter `model: sonnet` để ghi đè agent built-in. Từ đó mỗi khi subagent `general-purpose` được spawn (tìm code, khám phá, research nhiều bước) sẽ chạy **Sonnet thay vì Opus** — loại việc này Sonnet làm dư sức, chất lượng gần như không đổi mà cắt phần lớn chi phí (subagent search/research thường ngốn nhiều token).
+
+Xem mẫu: [agents/general-purpose.md](agents/general-purpose.md).
+
+**Lưu ý:**
+- Áp dụng cho **session mới** (session hiện tại cần khởi động lại để nhận config).
+- File này ghi đè cả **system prompt** chứ không chỉ model — nếu thấy kết quả sơ sài hơn, bổ sung hướng dẫn vào body trước khi nghĩ tới đổi lại Opus.
+- Gặp việc khó mà Sonnet làm chưa tốt thì đổi `model: sonnet` → `model: opus`.
