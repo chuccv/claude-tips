@@ -1,0 +1,42 @@
+{
+  "env": {
+    "CCGUI_CLI_LOGIN_AUTHORIZED": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(rm -rf generated/code/* generated/metadata/*)",
+      "Bash(ddev php *)"
+    ],
+    "deny": [
+      "AskUserQuestion"
+    ],
+    "defaultMode": "bypassPermissions"
+  },
+  "model": "opus[1m]",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/neil/.claude/hooks/block-dangerous-bash.sh"
+          },
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command // \"\"' | grep -qE '(^|[^[:alnum:]_])(grep|egrep|fgrep|rg|ripgrep|ag|find)([[:space:]]|$)' && printf '%s' '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"Reminder: prefer codegraph (codegraph_explore/codegraph_search/codegraph_callers) over raw grep/rg/find/ag for code/symbol exploration. Raw text-search is only OK for XML literal-string/attribute lookups that are not symbols.\"}}' || true"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "medium",
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "remoteControlAtStartup": false
+}
