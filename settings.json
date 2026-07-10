@@ -13,6 +13,11 @@
     "defaultMode": "bypassPermissions"
   },
   "model": "opus[1m]",
+  "statusLine": {
+    "type": "command",
+    "command": "bash /home/neil/.claude/statusline-command.sh",
+    "padding": 0
+  },
   "hooks": {
     "PreToolUse": [
       {
